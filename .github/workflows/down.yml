@@ -1,0 +1,32 @@
+name: Down
+on: workflow_dispatch
+
+jobs:
+  down:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Docker Machine
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: up.yml
+          name: docker-machine
+          path: /home/runner/.docker/machine
+
+      - name: Down
+        run: |
+          set -ex
+
+          base=https://github.com/docker/machine/releases/download/v0.16.0 && \
+          curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && \
+          sudo mv /tmp/docker-machine /usr/local/bin/docker-machine && \
+          chmod +x /usr/local/bin/docker-machine
+
+          eval $(docker-machine env automuteus --shell bash)
+          docker-machine rm automuteus -y
+
+      - name: Discord Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'AutoMuteUs has been deleted.'
