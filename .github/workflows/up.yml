@@ -24,6 +24,7 @@ jobs:
               --driver digitalocean \
               --digitalocean-access-token \
               ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }} \
+              --engine-install-url "https://releases.rancher.com/install-docker/19.03.9.sh" \
               automuteus
 
           eval $(docker-machine env automuteus --shell bash)
