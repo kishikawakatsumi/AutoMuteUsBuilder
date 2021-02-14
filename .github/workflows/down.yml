@@ -16,7 +16,7 @@ jobs:
         run: |
           set -ex
 
-          base=https://github.com/docker/machine/releases/download/v0.16.0 && \
+          base=https://github.com/docker/machine/releases/download/v0.16.2 && \
           curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && \
           sudo mv /tmp/docker-machine /usr/local/bin/docker-machine && \
           chmod +x /usr/local/bin/docker-machine
@@ -29,4 +29,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'AutoMuteUs has been deleted.'
+          args: "AutoMuteUs has been deleted."
